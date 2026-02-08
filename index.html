@@ -38,7 +38,7 @@ h1 {
 
 .gif-box {
   margin: 15px 0;
-  min-height: 180px;
+  min-height: 200px;
 }
 
 #message {
@@ -48,7 +48,6 @@ h1 {
   color: #444;
 }
 
-/* split safe zones */
 .btn-wrapper {
   display: flex;
   flex-direction: column;
@@ -107,8 +106,8 @@ button {
 <div class="card">
   <h1>Will you be my Valentine? 💛</h1>
 
+  <!-- default crying -->
   <div class="gif-box" id="gifBox">
-    <!-- Crying Zenitsu -->
     <div class="tenor-gif-embed"
          data-postid="22585242"
          data-share-method="host"
@@ -118,7 +117,8 @@ button {
     </div>
   </div>
 
-  <div id="message">Love you chellooo 🥰</div>
+  <!-- EMPTY at start -->
+  <div id="message"></div>
 
   <div class="btn-wrapper">
     <div class="yes-area">
@@ -191,23 +191,14 @@ noBtn.addEventListener("click", () => {
 });
 
 yesBtn.addEventListener("click", () => {
-  message.innerText = "Love You chelloooooo 🥰";
+  message.innerText = "Love you chellooo 🥰";
   celebrate.innerHTML = "🫂💛💖";
 
+  // swap to your giphy gif (super reliable)
   gifBox.innerHTML = `
-    <div class="tenor-gif-embed"
-         data-postid="15189023337606795453"
-         data-share-method="host"
-         data-aspect-ratio="1.76596"
-         data-width="100%">
-      <a href="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmQwbWtoemt1Z2c5cTdoMGFnaTNvaDFkaTJ2dm1wbTY5ZnQ0OXZneiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/aJQHLfBFCQBPHJ9D2i/giphy.gif">Happy Zenitsu</a>
-    </div>
+    <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmQwbWtoemt1Z2c5cTdoMGFnaTNvaDFkaTJ2dm1wbTY5ZnQ0OXZneiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/aJQHLfBFCQBPHJ9D2i/giphy.gif"
+         style="width:100%; border-radius:12px;" />
   `;
-
-  // force reload embeds (IMPORTANT FIX)
-  setTimeout(() => {
-    if (window.Tenor) window.Tenor.initEmbeds();
-  }, 100);
 });
 </script>
 
