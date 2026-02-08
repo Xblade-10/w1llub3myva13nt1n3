@@ -8,88 +8,97 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-  * { box-sizing: border-box; }
+* { box-sizing: border-box; }
 
-  body {
-    margin: 0;
-    font-family: "Poppins", sans-serif;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #fff7a8, #ffd84d);
-    padding: 20px;
-  }
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #fff7a8, #ffd84d);
+  padding: 20px;
+}
 
-  .card {
-    width: 100%;
-    max-width: 420px;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-    padding: 20px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  padding: 20px;
+  text-align: center;
+}
 
-  h1 {
-    font-size: 22px;
-    margin-bottom: 10px;
-  }
+h1 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
 
-  .gif-box {
-    margin: 15px 0;
-  }
+.gif-box {
+  margin: 15px 0;
+  min-height: 180px;
+}
 
-  #message {
-    min-height: 48px;
-    font-weight: 600;
-    margin: 10px 0 15px;
-    color: #444;
-  }
+#message {
+  min-height: 48px;
+  font-weight: 600;
+  margin: 10px 0 15px;
+  color: #444;
+}
 
-  .btn-area {
-    position: relative;
-    height: 120px;
-  }
+/* split safe zones */
+.btn-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
-  button {
-    padding: 12px 18px;
-    border-radius: 12px;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    position: absolute;
-    transition: all 0.25s ease;
-    white-space: nowrap;
-  }
+.yes-area {
+  text-align: center;
+}
 
-  .yes {
-    background: #ff4d6d;
-    color: white;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 10px;
-  }
+.no-area {
+  position: relative;
+  height: 120px;
+  border-radius: 12px;
+  background: #f6f6f6;
+  overflow: hidden;
+}
 
-  .no {
-    background: #222;
-    color: white;
-    top: 10px;
-    left: 10px;
-  }
+button {
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
 
-  #celebrate {
-    font-size: 40px;
-    margin-top: 10px;
-  }
+.yes {
+  background: #ff4d6d;
+  color: white;
+}
 
-  .footer {
-    margin-top: 10px;
-    font-size: 12px;
-    color: #888;
-  }
+.no {
+  background: #222;
+  color: white;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+#celebrate {
+  font-size: 40px;
+  margin-top: 10px;
+}
+
+.footer {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #888;
+}
 </style>
 </head>
 
@@ -99,7 +108,7 @@
   <h1>Will you be my Valentine? 💛</h1>
 
   <div class="gif-box" id="gifBox">
-    <!-- crying gif default -->
+    <!-- Crying Zenitsu -->
     <div class="tenor-gif-embed"
          data-postid="22585242"
          data-share-method="host"
@@ -109,11 +118,16 @@
     </div>
   </div>
 
-  <div id="message"></div>
+  <div id="message">Love you chellooo 🥰</div>
 
-  <div class="btn-area">
-    <button class="no" id="noBtn">No 🙈</button>
-    <button class="yes" id="yesBtn">Yes 💞</button>
+  <div class="btn-wrapper">
+    <div class="yes-area">
+      <button class="yes" id="yesBtn">Yes 💞</button>
+    </div>
+
+    <div class="no-area" id="noArea">
+      <button class="no" id="noBtn">No 🙈</button>
+    </div>
   </div>
 
   <div id="celebrate"></div>
@@ -128,6 +142,7 @@ const yesBtn = document.getElementById("yesBtn");
 const message = document.getElementById("message");
 const celebrate = document.getElementById("celebrate");
 const gifBox = document.getElementById("gifBox");
+const noArea = document.getElementById("noArea");
 
 let noCount = 0;
 
@@ -155,9 +170,8 @@ const noMessages = [
 ];
 
 function moveNoButton() {
-  const area = document.querySelector(".btn-area");
-  const maxX = area.clientWidth - noBtn.clientWidth;
-  const maxY = area.clientHeight - noBtn.clientHeight;
+  const maxX = noArea.clientWidth - noBtn.clientWidth;
+  const maxY = noArea.clientHeight - noBtn.clientHeight;
 
   const x = Math.random() * maxX;
   const y = Math.random() * maxY;
@@ -170,15 +184,14 @@ noBtn.addEventListener("click", () => {
   if (noCount < noMessages.length) {
     message.innerText = noMessages[noCount];
     noCount++;
-    moveNoButton();
   } else {
     message.innerText = "Rejection blocked by Thunder Breathing 😤⚡";
-    moveNoButton();
   }
+  moveNoButton();
 });
 
 yesBtn.addEventListener("click", () => {
-  message.innerText = "Love you chellooo 🥰";
+  message.innerText = "BEST DECISION EVER 🥰";
   celebrate.innerHTML = "🫂💛💖";
 
   gifBox.innerHTML = `
@@ -187,10 +200,14 @@ yesBtn.addEventListener("click", () => {
          data-share-method="host"
          data-aspect-ratio="1.76596"
          data-width="100%">
-      <a href="https://tenor.com/view/anime-zenitsu-agatsuma-demon-slayer-kimetsu-no-yaiba-flowers-gif-17636946">Happy Zenitsu</a>
+      <a href="https://tenor.com/view/happy-zenitsu-zenitsu-hop-toadmelon-toadmelon-kny-gif-15189023337606795453">Happy Zenitsu</a>
     </div>
   `;
-  if (window.Tenor) window.Tenor.initEmbeds();
+
+  // force reload embeds (IMPORTANT FIX)
+  setTimeout(() => {
+    if (window.Tenor) window.Tenor.initEmbeds();
+  }, 100);
 });
 </script>
 
