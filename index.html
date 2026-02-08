@@ -1,94 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>⚡ Important Question ⚡</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>⚡ A Very Important Question</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
+  * { box-sizing: border-box; }
+
   body {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Poppins", sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #fff7a8, #ffd84d);
+    padding: 20px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 420px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    padding: 20px;
     text-align: center;
-    background: linear-gradient(135deg, #fff07a, #ffd000);
-    overflow-x: hidden;
+    position: relative;
+    overflow: hidden;
   }
 
   h1 {
-    margin-top: 40px;
-    font-size: 36px;
+    font-size: 22px;
+    margin-bottom: 10px;
   }
 
-  #zenitsu {
-    width: 220px;
-    border-radius: 12px;
-    margin-top: 20px;
+  .gif-box {
+    margin: 15px 0;
   }
 
   #message {
-    margin: 20px;
-    font-size: 22px;
-    min-height: 40px;
-    font-weight: bold;
+    min-height: 48px;
+    font-weight: 600;
+    margin: 10px 0 15px;
+    color: #444;
+  }
+
+  .btn-area {
+    position: relative;
+    height: 120px;
   }
 
   button {
-    padding: 12px 22px;
-    font-size: 18px;
-    margin: 10px;
+    padding: 12px 18px;
     border-radius: 12px;
     border: none;
+    font-size: 16px;
     cursor: pointer;
-    transition: transform 0.15s ease;
-  }
-
-  button:hover {
-    transform: scale(1.08);
+    position: absolute;
+    transition: all 0.25s ease;
+    white-space: nowrap;
   }
 
   .yes {
     background: #ff4d6d;
     color: white;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 10px;
   }
 
   .no {
-    background: #333;
+    background: #222;
     color: white;
+    top: 10px;
+    left: 10px;
   }
 
   #celebrate {
-    font-size: 55px;
-    margin-top: 20px;
+    font-size: 40px;
+    margin-top: 10px;
   }
 
-  .lightning {
-    position: fixed;
-    font-size: 22px;
-    animation: fall 3s linear infinite;
-    opacity: 0.7;
-  }
-
-  @keyframes fall {
-    from { transform: translateY(-100px); }
-    to { transform: translateY(110vh); }
+  .footer {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #888;
   }
 </style>
 </head>
 
 <body>
 
-<h1>Will you be my Valentine? 💛⚡</h1>
+<div class="card">
+  <h1>Will you be my Valentine? 💛</h1>
 
-<img id="zenitsu" src="https://media.tenor.com/hn6mJv5nD9sAAAAC/zenitsu-crying.gif">
+  <div class="gif-box" id="gifBox">
+    <!-- crying gif default -->
+    <div class="tenor-gif-embed"
+         data-postid="22585242"
+         data-share-method="host"
+         data-aspect-ratio="1.79775"
+         data-width="100%">
+      <a href="https://tenor.com/view/cry-gif-22585242">Cry GIF</a>
+    </div>
+  </div>
 
-<div>
-  <button class="yes" onclick="sayYes()">Yes 💞</button>
-  <button class="no" onclick="sayNo()">No 🙈</button>
+  <div id="message"></div>
+
+  <div class="btn-area">
+    <button class="no" id="noBtn">No 🙈</button>
+    <button class="yes" id="yesBtn">Yes 💞</button>
+  </div>
+
+  <div id="celebrate"></div>
+  <div class="footer">⚡ powered by feelings</div>
 </div>
 
-<div id="message"></div>
-<div id="celebrate"></div>
+<script async src="https://tenor.com/embed.js"></script>
 
 <script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const message = document.getElementById("message");
+const celebrate = document.getElementById("celebrate");
+const gifBox = document.getElementById("gifBox");
+
 let noCount = 0;
 
 const noMessages = [
@@ -96,53 +136,62 @@ const noMessages = [
   "Chello la 😭",
   "Nalla koch alle 🥹",
   "Muth alle 😚",
-  "Don't do this to me 💔",
+  "Please reconsider 💔",
   "I am shaking ⚡",
-  "Please reconsider 🫠",
-  "My heart is fragile 😭",
-  "You are too sweet for this 😤",
-  "Think once more 🥺",
-  "I will literally faint 😵",
-  "Kindness level zero 😭",
-  "Why you like this 🥲",
-  "I brought feelings 💘",
+  "My heart is tiny 🥲",
+  "You are too sweet to say no 😤",
+  "Try again maybe 🫠",
+  "Why this pain 😭",
+  "I trusted you 🥺",
+  "Don’t be cruel 💘",
+  "I will cry louder 😭",
+  "Think once more 🥹",
   "Emotional damage 💔",
-  "Are you testing me 👀",
-  "Say yes maybe 🥰",
-  "I can beg more 😭",
-  "Last try 🥺",
+  "Be nice da 🫶",
+  "Come on chello 🥰",
+  "Almost yes 😭",
+  "Last attempt 🥺",
   "Waiting… ⚡"
 ];
 
-function sayNo() {
-  const msg = document.getElementById("message");
-  const gif = document.getElementById("zenitsu");
+function moveNoButton() {
+  const area = document.querySelector(".btn-area");
+  const maxX = area.clientWidth - noBtn.clientWidth;
+  const maxY = area.clientHeight - noBtn.clientHeight;
 
+  const x = Math.random() * maxX;
+  const y = Math.random() * maxY;
+
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+}
+
+noBtn.addEventListener("click", () => {
   if (noCount < noMessages.length) {
-    msg.innerText = noMessages[noCount];
-    gif.src = "https://media.tenor.com/hn6mJv5nD9sAAAAC/zenitsu-crying.gif";
+    message.innerText = noMessages[noCount];
     noCount++;
+    moveNoButton();
   } else {
-    msg.innerText = "Rejection not accepted by Thunder Breathing 😤⚡";
+    message.innerText = "Rejection blocked by Thunder Breathing 😤⚡";
+    moveNoButton();
   }
-}
+});
 
-function sayYes() {
-  document.getElementById("message").innerText = "Love you chelooo 🥰";
-  document.getElementById("celebrate").innerHTML = "🫂💛⚡💖";
-  document.getElementById("zenitsu").src =
-    "https://media.tenor.com/4a6bR9gW0mAAAAAC/zenitsu-happy.gif";
-}
+yesBtn.addEventListener("click", () => {
+  message.innerText = "Love you chellooo 🥰";
+  celebrate.innerHTML = "🫂💛💖";
 
-/* falling lightning */
-for (let i = 0; i < 15; i++) {
-  let bolt = document.createElement("div");
-  bolt.className = "lightning";
-  bolt.style.left = Math.random() * 100 + "vw";
-  bolt.style.animationDelay = Math.random() * 3 + "s";
-  bolt.innerText = "⚡";
-  document.body.appendChild(bolt);
-}
+  gifBox.innerHTML = `
+    <div class="tenor-gif-embed"
+         data-postid="15189023337606795453"
+         data-share-method="host"
+         data-aspect-ratio="1.76596"
+         data-width="100%">
+      <a href="https://tenor.com/view/happy-zenitsu-zenitsu-hop-toadmelon-toadmelon-kny-gif-15189023337606795453">Happy Zenitsu</a>
+    </div>
+  `;
+  if (window.Tenor) window.Tenor.initEmbeds();
+});
 </script>
 
 </body>
