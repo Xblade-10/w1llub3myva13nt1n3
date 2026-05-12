@@ -1,205 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>⚡ A Very Important Question</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subdomain Takeover Validation</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #0f172a;
+            color: #e2e8f0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 80px;
+        }
 
-<style>
-* { box-sizing: border-box; }
+        .card {
+            width: 700px;
+            margin: auto;
+            background: #111827;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.5);
+        }
 
-body {
-  margin: 0;
-  font-family: "Poppins", sans-serif;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #fff7a8, #ffd84d);
-  padding: 20px;
-}
+        h1 {
+            color: #22c55e;
+            font-size: 42px;
+        }
 
-.card {
-  width: 100%;
-  max-width: 420px;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-  padding: 20px;
-  text-align: center;
-}
+        code {
+            background: #1e293b;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
 
-h1 {
-  font-size: 22px;
-  margin-bottom: 10px;
-}
+        .warning {
+            color: #facc15;
+            margin-top: 20px;
+        }
 
-.gif-box {
-  margin: 15px 0;
-  min-height: 200px;
-}
+        button {
+            margin-top: 30px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
 
-#message {
-  min-height: 48px;
-  font-weight: 600;
-  margin: 10px 0 15px;
-  color: #444;
-}
-
-.btn-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.yes-area {
-  text-align: center;
-}
-
-.no-area {
-  position: relative;
-  height: 120px;
-  border-radius: 12px;
-  background: #f6f6f6;
-  overflow: hidden;
-}
-
-button {
-  padding: 12px 18px;
-  border-radius: 12px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.yes {
-  background: #ff4d6d;
-  color: white;
-}
-
-.no {
-  background: #222;
-  color: white;
-  position: absolute;
-  top: 10px;
-  left: 10px;
-}
-
-#celebrate {
-  font-size: 40px;
-  margin-top: 10px;
-}
-
-.footer {
-  margin-top: 10px;
-  font-size: 12px;
-  color: #888;
-}
-</style>
+        button:hover {
+            opacity: 0.9;
+        }
+    </style>
 </head>
-
 <body>
 
 <div class="card">
-  <h1>Will you be my Valentine Thangoo ?? 💛</h1>
+    <h1>Subdomain Takeover Confirmed</h1>
 
-  <!-- default crying -->
-  <div class="gif-box" id="gifBox">
-    <div class="tenor-gif-embed"
-         data-postid="22585242"
-         data-share-method="host"
-         data-aspect-ratio="1.79775"
-         data-width="100%">
-      <a href="https://tenor.com/view/cry-gif-22585242">Cry GIF</a>
-    </div>
-  </div>
+    <p>
+        This domain is serving attacker-controlled content via a dangling
+        GitHub Pages configuration.
+    </p>
 
-  <!-- EMPTY at start -->
-  <div id="message"></div>
+    <p>
+        Host: <code id="host"></code>
+    </p>
 
-  <div class="btn-wrapper">
-    <div class="yes-area">
-      <button class="yes" id="yesBtn">Yes 💞</button>
-    </div>
+    <p>
+        Current Time: <code id="time"></code>
+    </p>
 
-    <div class="no-area" id="noArea">
-      <button class="no" id="noBtn">No 🙈</button>
-    </div>
-  </div>
+    <button onclick="runPoC()">Run JS PoC</button>
 
-  <div id="celebrate"></div>
-  <div class="footer">⚡ powered by feelings</div>
+    <p class="warning">
+        Authorized Security Assessment Proof-of-Concept Only
+    </p>
 </div>
 
-<script async src="https://tenor.com/embed.js"></script>
-
 <script>
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-const message = document.getElementById("message");
-const celebrate = document.getElementById("celebrate");
-const gifBox = document.getElementById("gifBox");
-const noArea = document.getElementById("noArea");
+    document.getElementById("host").innerText = window.location.hostname;
+    document.getElementById("time").innerText = new Date().toString();
 
-let noCount = 0;
-
-const noMessages = [
-  "Thango la 🥺",
-  "Chello la 😭",
-  "Nalla koch alle 🥹",
-  "Muth alle 😚",
-  "Please reconsider 💔",
-  "I am shaking ⚡",
-  "My heart is tiny 🥲",
-  "You are too sweet to say no 😤",
-  "Try again maybe 🫠",
-  "Why this pain 😭",
-  "I trusted you 🥺",
-  "Don’t be cruel 💘",
-  "I will cry louder 😭",
-  "Think once more 🥹",
-  "Emotional damage 💔",
-  "Be nice da 🫶",
-  "Come on chello 🥰",
-  "Almost yes 😭",
-  "Last attempt 🥺",
-  "Waiting… ⚡"
-];
-
-function moveNoButton() {
-  const maxX = noArea.clientWidth - noBtn.clientWidth;
-  const maxY = noArea.clientHeight - noBtn.clientHeight;
-
-  const x = Math.random() * maxX;
-  const y = Math.random() * maxY;
-
-  noBtn.style.left = x + "px";
-  noBtn.style.top = y + "px";
-}
-
-noBtn.addEventListener("click", () => {
-  if (noCount < noMessages.length) {
-    message.innerText = noMessages[noCount];
-    noCount++;
-  } else {
-    message.innerText = "Rejection blocked by Thunder Breathing 😤⚡";
-  }
-  moveNoButton();
-});
-
-yesBtn.addEventListener("click", () => {
-  message.innerText = "Love you chellooo 🥰";
-  celebrate.innerHTML = "🫂💛💖";
-
-  // swap to your giphy gif (super reliable)
-  gifBox.innerHTML = `
-    <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmQwbWtoemt1Z2c5cTdoMGFnaTNvaDFkaTJ2dm1wbTY5ZnQ0OXZneiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/aJQHLfBFCQBPHJ9D2i/giphy.gif"
-         style="width:100%; border-radius:12px;" />
-  `;
-});
+    function runPoC() {
+        alert("JavaScript Execution Successful on " + window.location.hostname);
+        console.log("Subdomain takeover PoC executed successfully.");
+    }
 </script>
 
 </body>
